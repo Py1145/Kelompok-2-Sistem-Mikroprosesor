@@ -1,75 +1,43 @@
-const int suara=A0;
-
-int bacaSuara;
-
-const int led=2;
-
-int batas=100;
-
-const int buzz = 4;
-
-const int pir = 7;
-
+const int suara=A0; //Pin untuk sensor suara
+int bacaSuara; // Mendeklarasikan bacasuara
+const int led=2; // Pin untuk LED
+int batas=1017; // Batas nilai ambang untuk sensor suara (tergantung kondisi)
+const int buzz = 4; // Pin untuk buzzer
+const int pir = 7; // Pin untuk sensor PIR
 int val ;
 
 void setup() {
-
-  Serial.begin(9600);
-
-  pinMode(suara,INPUT);
-
-  pinMode(led,OUTPUT);
-
-  pinMode(buzz,OUTPUT);
-
-  pinMode (pir,INPUT);
-
+  Serial.begin(9600); // Memulai serial monitor
+  pinMode(suara,INPUT); // Mengatur pin-mode
+  pinMode(led,OUTPUT); // Mengatur pin-mode
+  pinMode(buzz,OUTPUT); // Mengatur pin-mode
+  pinMode (pir,INPUT); // Mengatur pin-mode
 }
 
 void loop() {
+  bacaSuara=analogRead(suara); // Membaca status deteksi suara
+   val = digitalRead(pir); // Membaca status deteksi PIR
+  Serial.println(bacaSuara); //Nilai yang ditampilkan di serial monitor
 
-  bacaSuara=analogRead(suara);
-
-   val = digitalRead(pir);
-
-  Serial.println(bacaSuara);
-
-  if(bacaSuara>=batas)
-
+  if(bacaSuara>=batas) // Memeriksa jika nilai suara melebihi batas ambang
   {
-
-    digitalWrite(led,HIGH);
-
-    delay(1000);
-
+    digitalWrite(led,HIGH); // Menyalakan output LED
+    delay(1000); // Delay untuk stabilisasi pada serial monitor
   }
-
   else
-
   {
-
-    digitalWrite(led,LOW);
-
+    digitalWrite(led,LOW); // Menghentikan output LED
   }
-
- if (val == HIGH){
-
-    digitalWrite(buzz,HIGH);
-
-    Serial.println("ADA MALING!!!");
-
+ if (val == HIGH) // Menyalakan atau mematikan buzzer berdasarkan status deteksi
+ {
+    digitalWrite(buzz,HIGH); //Gerakan terdeteksi, menyalakan buzzer
+    Serial.println("ADA MALING!!!"); //Hasil yang ditampilkan bila terdapat gerakan yang terdeteksi
+    delay(500); //Delay untuk stabilisasi pada serial monitor
   }
-
   else
-
   {
-
-    digitalWrite(buzz,LOW);
-
-     Serial.println("AMAN");
-
-     delay(500);
-     
+    digitalWrite(buzz,LOW); //Tidak terdeteksi gerakan, mematikan buzzer
+     Serial.println("AMAN"); //Hasil yang ditampilkan bila tidak terdapat gerakan
+     delay(500); //Delay untuk stabilisasi pada serial monitor
   }
-
 }
