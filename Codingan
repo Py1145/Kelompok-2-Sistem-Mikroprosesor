@@ -1,0 +1,75 @@
+const int suara=A0;
+
+int bacaSuara;
+
+const int led=2;
+
+int batas=100;
+
+const int buzz = 4;
+
+const int pir = 7;
+
+int val ;
+
+void setup() {
+
+  Serial.begin(9600);
+
+  pinMode(suara,INPUT);
+
+  pinMode(led,OUTPUT);
+
+  pinMode(buzz,OUTPUT);
+
+  pinMode (pir,INPUT);
+
+}
+
+void loop() {
+
+  bacaSuara=analogRead(suara);
+
+   val = digitalRead(pir);
+
+  Serial.println(bacaSuara);
+
+  if(bacaSuara>=batas)
+
+  {
+
+    digitalWrite(led,HIGH);
+
+    delay(1000);
+
+  }
+
+  else
+
+  {
+
+    digitalWrite(led,LOW);
+
+  }
+
+ if (val == HIGH){
+
+    digitalWrite(buzz,HIGH);
+
+    Serial.println("ADA MALING!!!");
+
+  }
+
+  else
+
+  {
+
+    digitalWrite(buzz,LOW);
+
+     Serial.println("AMAN");
+
+     delay(500);
+
+  }
+
+}
